@@ -44,26 +44,36 @@ export default class EnemyController {
             this.moveDownTimer--;
         }
     }
-    updateVelocityAndDirection () {
+  
+    updateVelocityAndDirection() {
         for (const enemyRow of this.enemyRows) {
-            if(this.currentDirection == MovingDirection.right) {
-                this.xVelocity = this.defaultXVelocity;
-                this.yVelocity = 0;
-                const rightMosteEnemy = enemyRow[enemyRow.length -1];
-                if(rightMosteEnemy.x + rightMosteEnemy.width >= this.canvas.width) {
-                    this.currentDirection = MovingDirection.downLeft;
-                    break;
-                }
+          if (this.currentDirection == MovingDirection.right) {
+            this.xVelocity = this.defaultXVelocity;
+            this.yVelocity = 0;
+            const rightMostEnemy = enemyRow[enemyRow.length - 1];
+            if (rightMostEnemy.x + rightMostEnemy.width >= this.canvas.width) {
+              this.currentDirection = MovingDirection.downLeft;
+              break;
             }
-            else if (this.currentDirection === MovingDirection.downLeft) {
-                this.xVelocity = 0;
-                this.yVelocity = this.defaultYVelocity;
-                if(this.moveDown(MovingDirection.left)) {
-                    break;
-                }
+            } else if (this.currentDirection === MovingDirection.downLeft) {
+            if (this.moveDown(MovingDirection.left)) {
+              break;
             }
+            } else if (this.currentDirection === MovingDirection.left) {
+            this.xVelocity = -this.defaultXVelocity;
+            this.yVelocity = 0;
+            const leftMostEnemy = enemyRow[0];
+            if (leftMostEnemy.x <= 0) {
+              this.currentDirection = MovingDirection.downRight;
+              break;
+            }
+            } else if (this.currentDirection === MovingDirection.downRight) {
+            if (this.moveDown(MovingDirection.right)) {
+              break;
+            }
+          }
         }
-    }
+      }
     moveDown(newDirection) {
         this.xVelocity = 0;
         this.yVelocity = this.defaultYVelocity;
