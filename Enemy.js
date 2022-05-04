@@ -4,7 +4,6 @@ export default class Enemy {
         this.y = y;
         this.width = 40;
         this.height = 40;
-
         this.image = new Image();
         this.image.src = `images/enemy${imageNumber}.png`
     }
@@ -14,5 +13,17 @@ export default class Enemy {
     move(xVelocity, yVelocity) {
         this.x += xVelocity;
         this.y += yVelocity;
+    }
+    collideWith(sprite) {
+        if (
+            this.x + this.width > sprite.x &&
+            this.x < sprite.x + sprite.width &&
+            this.y + this.height > sprite.y &&
+            this.y < sprite.y + sprite.height
+        ) { 
+            return true;
+        } else {
+        return false;
+        }
     }
 }
